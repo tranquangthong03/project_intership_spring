@@ -57,6 +57,8 @@ The CV upload endpoint is available at:
 
 - http://localhost:4000/upload-cv
 
+The upload response includes a parsed `candidateProfile` and raw extracted text.
+
 Start the web app (port 3000) in another terminal:
 
 ```bash
