@@ -21,3 +21,17 @@ export type UploadCvData = {
   size: number;
   storagePath: string;
 };
+
+export type CandidateProfile = {
+  fullName: string | null;
+  email: string | null;
+  phone: string | null;
+  location: string | null;
+  summary: string | null;
+  yearsOfExperience: number;
+  roles: string[];
+  skills: string[];
+  education: string[];
+  projects: string[];
+  rawText: string;
+};
