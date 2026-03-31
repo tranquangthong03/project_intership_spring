@@ -1,0 +1,18 @@
+[
+  {
+    "id": "job-001",
+    "source": "itviec",
+    "title": "Frontend Developer Intern",
+    "company": "Tech Nova",
+    "location": "Ho Chi Minh City",
+    "workMode": "hybrid",
+    "seniority": "intern",
+    "salaryMin": null,
+    "salaryMax": null,
+    "currency": null,
+    "skills": ["HTML", "CSS", "JavaScript", "React"],
+    "roleKeywords": ["frontend", "ui", "web"],
+    "description": "Looking for a Frontend Developer Intern with basic React knowledge and strong willingness to learn.",
+    "url": "https://example.com/jobs/job-001"
+  }
+]

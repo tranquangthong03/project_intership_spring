@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "data": {
+    "candidateProfile": {
+      "fullName": "Thong Tran",
+      "email": "example@email.com",
+      "phone": null,
+      "location": "Ho Chi Minh City",
+      "summary": "Frontend-oriented student with React and JavaScript project experience.",
+      "yearsOfExperience": 0,
+      "roles": ["Frontend Developer Intern", "Frontend Developer"],
+      "skills": ["HTML", "CSS", "JavaScript", "React", "Git"],
+      "education": ["Information Technology"],
+      "projects": ["Personal portfolio"],
+      "rawText": "Sample extracted CV text..."
+    },
+    "matches": [
+      {
+        "jobId": "job-001",
+        "title": "Frontend Developer Intern",
+        "company": "Tech Nova",
+        "matchScore": 92,
+        "matchedSkills": ["HTML", "CSS", "JavaScript", "React"],
+        "missingSkills": [],
+        "experienceFit": "high",
+        "roleFit": "high",
+        "reasoning": "Strong skill overlap and direct role alignment for an internship-level frontend position.",
+        "recommendation": "apply"
+      }
+    ]
+  }
+}
