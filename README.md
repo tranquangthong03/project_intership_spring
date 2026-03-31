@@ -53,11 +53,19 @@ The health check is available at:
 
 - http://localhost:4000/health
 
+The CV upload endpoint is available at:
+
+- http://localhost:4000/upload-cv
+
 Start the web app (port 3000) in another terminal:
 
 ```bash
 npm run dev -w apps/web
 ```
+
+Optional environment variable for the web app:
+
+- `NEXT_PUBLIC_API_BASE_URL` (default: http://localhost:4000)
 
 ## Important files
 

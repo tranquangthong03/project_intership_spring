@@ -25,3 +25,55 @@ p {
   margin: 0;
   color: #374151;
 }
+
+.upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+  align-items: center;
+}
+
+.file-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.file-input input {
+  display: none;
+}
+
+button {
+  border: none;
+  background: #111827;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:disabled {
+  background: #6b7280;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #111827;
+}
+
+.status-success {
+  color: #047857;
+}
+
+.status-error {
+  color: #b91c1c;
+}
