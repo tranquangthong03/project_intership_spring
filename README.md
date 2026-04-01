@@ -37,6 +37,15 @@ For each milestone:
 
 ## Local development
 
+### Configuration
+
+To enable the AI-powered matching, set up your OpenAI API Key in the `apps/api` environment. If not provided, the API will safely run in a rule-based matching mode.
+
+```bash
+# In apps/api/.env
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
 Install dependencies at the repo root:
 
 ```bash

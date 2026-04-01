@@ -4,6 +4,7 @@ import fs from "fs";
 import multer from "multer";
 import path from "path";
 import pdfParse from "pdf-parse";
+import { evaluateMatchWithAI } from "./services/aiMatcher";
 
 const app = express();
 const port = process.env.PORT ? Number(process.env.PORT) : 4000;
@@ -273,33 +274,52 @@ const computeRecommendation = (matchScore: number): "apply" | "consider" | "low-
   return "low-fit";
 };
 
-const matchJobs = (candidateProfile: ReturnType<typeof buildCandidateProfile>, jobs: JobFixture[]): JobMatch[] => {
-  const candidateSkills = new Set(candidateProfile.skills.map(toLower));
+const matchJobs = async (candidateProfile: ReturnType<typeof buildCandidateProfile>, jobs: JobFixture[]): Promise<JobMatch[]> => {
+  const candidateSkills = new Set(candidateProfile.skills.map(toLower));        
   const candidateRoles = candidateProfile.roles || [];
 
-  return jobs
-    .map((job) => {
-      const matchedSkills = job.skills.filter((skill) => candidateSkills.has(toLower(skill)));
-      const missingSkills = job.skills.filter((skill) => !candidateSkills.has(toLower(skill)));
-      const roleFit = computeRoleFit(candidateRoles, job);
-      const experienceFit = computeExperienceFit(candidateProfile.yearsOfExperience, job);
-      const locationFit = computeLocationFit(candidateProfile.location, job.location);
-      const matchScore = computeMatchScore(matchedSkills, job.skills.length, roleFit, experienceFit, locationFit);
+  const promises = jobs.map(async (job) => {
+    // 1. Calculate rule-based core metrics
+    const matchedSkills = job.skills.filter((skill) => candidateSkills.has(toLower(skill)));
+    const missingSkills = job.skills.filter((skill) => !candidateSkills.has(toLower(skill)));
+    const roleFit = computeRoleFit(candidateRoles, job);
+    const experienceFit = computeExperienceFit(candidateProfile.yearsOfExperience, job);
+    const locationFit = computeLocationFit(candidateProfile.location, job.location);
+    const matchScore = computeMatchScore(matchedSkills, job.skills.length, roleFit, experienceFit, locationFit);
 
-      return {
-        jobId: job.id,
-        title: job.title,
-        company: job.company,
-        matchScore,
-        matchedSkills,
-        missingSkills,
-        experienceFit,
-        roleFit,
-        reasoning: buildReasoning(matchedSkills.length, job.skills.length, roleFit, experienceFit, locationFit),
-        recommendation: computeRecommendation(matchScore)
-      };
-    })
-    .sort((a, b) => b.matchScore - a.matchScore);
+    const ruleBasedMatch: JobMatch = {
+      jobId: job.id,
+      title: job.title,
+      company: job.company,
+      matchScore,
+      matchedSkills,
+      missingSkills,
+      experienceFit,
+      roleFit,
+      reasoning: buildReasoning(matchedSkills.length, job.skills.length, roleFit, experienceFit, locationFit),
+      recommendation: computeRecommendation(matchScore),
+      isAIAssisted: false
+    };
+
+    // 2. Fallback to rule-based if AI enhancement is not available
+    const aiResult = await evaluateMatchWithAI(candidateProfile, job);
+    if (!aiResult) {
+      return ruleBasedMatch;
+    }
+
+    return {
+      ...ruleBasedMatch,
+      matchScore: aiResult.matchScore,
+      experienceFit: aiResult.experienceFit,
+      roleFit: aiResult.roleFit,
+      reasoning: aiResult.reasoning,
+      recommendation: aiResult.recommendation,
+      isAIAssisted: true
+    };
+  });
+
+  const matches = await Promise.all(promises);
+  return matches.sort((a, b) => b.matchScore - a.matchScore);
 };
 
 app.get("/health", (_req, res) => {
@@ -324,7 +344,7 @@ app.post("/upload-cv", upload.single("file"), async (req, res) => {
   const rawText = await extractTextFromPdf(req.file.path);
   const candidateProfile = buildCandidateProfile(rawText);
   const jobs = await loadJobs();
-  const matches = matchJobs(candidateProfile, jobs);
+  const matches = await matchJobs(candidateProfile, jobs);
 
   res.json({
     success: true,
@@ -347,7 +367,7 @@ app.post("/match", async (req, res) => {
   }
 
   const jobs = await loadJobs();
-  const matches = matchJobs(candidateProfile, jobs);
+  const matches = await matchJobs(candidateProfile, jobs);
 
   res.json({
     success: true,
