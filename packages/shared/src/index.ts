@@ -20,6 +20,8 @@ export type UploadCvData = {
   fileName: string;
   size: number;
   storagePath: string;
+  candidateProfile: CandidateProfile;
+  matches: JobMatch[];
 };
 
 export type CandidateProfile = {
