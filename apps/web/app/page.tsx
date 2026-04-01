@@ -92,6 +92,18 @@ export default function Home() {
     );
   }
 
+if (status === "uploading") {
+    return (
+      <main>
+        <div className="spinner-container">
+          <div className="spinner"></div>
+          <h2>Analyzing your CV...</h2>
+          <p>This might take a few seconds as we extract your skills and evaluate best job matches.</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main>
       <h1>AI Job Matcher</h1>
@@ -102,18 +114,18 @@ export default function Home() {
           <input
             type="file"
             accept="application/pdf"
-            onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+            onChange={(event) => setFile(event.target.files?.[0] ?? null)}      
           />
           <span>{file ? file.name : "Choose PDF file"}</span>
         </label>
         <button type="submit" disabled={status === "uploading"}>
-          {status === "uploading" ? "Analyzing..." : "Analyze CV"}
+          Analyze CV
         </button>
       </form>
 
-      {status !== "idle" && (
-        <div className={`status status-${status}`}>
-          <strong>Status:</strong> {message || status}
+      {status === "error" && (
+        <div className={`status status-error`}>
+          <strong>Error:</strong> {message}
         </div>
       )}
     </main>

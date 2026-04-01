@@ -18,15 +18,36 @@ function getPillClass(fit: string) {
 }
 
 export function JobMatchCard({ match }: Props) {
+  const borderClass = `border-${match.recommendation}`;
+  const badgeClass = `rec-${match.recommendation}`;
+
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">
-          {match.title} @ {match.company}
-        </h3>
-        <div className="score-badge">{match.matchScore}%</div>
+    <div className={`card match-card ${borderClass}`}>
+      <span className={`recommendation-badge ${badgeClass}`}>
+        {match.recommendation.replace("-", " ")}
+      </span>
+
+      <div className="match-header-info">
+        <div className="match-score-lg">
+          {match.matchScore}%
+        </div>
+        <div>
+          <h3 className="card-title">
+            {match.title}
+          </h3>
+          <div style={{ color: "#4b5563", marginTop: "4px" }}>
+            @ {match.company}
+          </div>
+        </div>
       </div>
+
       <p className="reasoning">{match.reasoning}</p>
+
+      {match.isAIAssisted && (
+        <div className="ai-assisted-badge">
+          ✨ AI Evaluated
+        </div>
+      )}
 
       <div className="fit-pills">
         <span className={`pill ${getPillClass(match.experienceFit)}`}>
@@ -40,11 +61,15 @@ export function JobMatchCard({ match }: Props) {
       <div className="pills-container">
         <strong>Matched Skills:</strong>
         <div className="pills">
-          {match.matchedSkills.map((skill) => (
-            <span key={skill} className="pill pill-success">
-              {skill}
-            </span>
-          ))}
+          {match.matchedSkills.length > 0 ? (
+            match.matchedSkills.map((skill) => (
+              <span key={skill} className="pill pill-success">
+                {skill}
+              </span>
+            ))
+          ) : (
+            <span className="pill">None</span>
+          )}
         </div>
       </div>
 
