@@ -1,35 +1,43 @@
 import { ItviecAdapter } from "./adapters/itviec/index.js";
+import { ingestJobPipeline, listIngestedJobs } from "./pipeline.js";
 
 async function main() {
-  console.log("--- Starting Crawler Skeleton ---");
+  console.log("--- Starting Crawler Skeleton & Ingestion Pipeline ---");
 
-  // Initialize the adapter for ITViec
   const itviecAdapter = new ItviecAdapter();
 
   try {
-    // 1. Fetch raw data (from local fixture in this skeleton)
+    // 1. Fetch raw data
     const rawJobs = await itviecAdapter.fetch();
     console.log(`Fetched ${rawJobs.length} raw job(s) from ${itviecAdapter.sourceName}.`);
 
-    // 2. Process each raw job through the parse and normalize pipeline
+    // 2. Process and Ingest
     for (const rawJob of rawJobs) {
-      console.log("\n--- Processing raw job ---");
-      console.log("URL:", rawJob.url);
-
-      // 2a. Parse the raw HTML
       const parsedJob = itviecAdapter.parse(rawJob);
-      console.log("\n[Parsed Data]:");
-      console.log(parsedJob);
-
-      // 2b. Normalize the parsed data into a standard format
       const normalizedJob = itviecAdapter.normalize(parsedJob);
+
       if (normalizedJob) {
-        console.log("\n[Normalized JobRecord]:");
-        console.log(normalizedJob);
+        await ingestJobPipeline(normalizedJob);
       } else {
-        console.log("\nNormalization failed or skipped.");
+        console.log("Normalization failed or skipped.");
       }
     }
+
+    // 3. Test Deduplication
+    console.log("\n--- Testing Deduplication (Running again) ---");
+    for (const rawJob of rawJobs) {
+      const parsedJob = itviecAdapter.parse(rawJob);
+      const normalizedJob = itviecAdapter.normalize(parsedJob);
+      if (normalizedJob) {
+        await ingestJobPipeline(normalizedJob);
+      }
+    }
+
+    // 4. Read to verify storage
+    console.log("\n--- Listing Ingested Jobs in Storage ---");
+    const jobs = await listIngestedJobs();
+    console.log(`Total jobs currently in storage: ${jobs.length}`);
+
   } catch (error) {
     console.error("\n--- An error occurred during the crawl process ---");
     console.error(error);

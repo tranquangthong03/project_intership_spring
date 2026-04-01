@@ -151,24 +151,28 @@ type JobMatch = {
 };
 
 const repoRoot = path.resolve(process.cwd(), "..", "..");
-const jobsPath = path.resolve(repoRoot, "fixtures", "sample_jobs.json");
+const jobsPath = path.resolve(repoRoot, "data", "jobs.json");
+const fixtureJobsPath = path.resolve(repoRoot, "fixtures", "sample_jobs.json");
+
 let cachedJobs: JobFixture[] | null = null;
 
 const loadJobs = async (): Promise<JobFixture[]> => {
-  if (cachedJobs) {
-    return cachedJobs;
-  }
-
+  // Always try to reload from storage file rather than caching indefinitely
   try {
     const raw = await fs.promises.readFile(jobsPath, "utf8");
     const parsed = JSON.parse(raw) as JobFixture[];
     cachedJobs = Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    console.warn("Failed to load fixtures", error);
-    cachedJobs = [];
+    console.warn("Failed to load jobs from data/jobs.json, falling back to fixtures", error);
+    try {
+      const stub = await fs.promises.readFile(fixtureJobsPath, "utf8");
+      cachedJobs = JSON.parse(stub);
+    } catch {
+      cachedJobs = [];
+    }
   }
 
-  return cachedJobs;
+  return cachedJobs || [];
 };
 
 const toLower = (value: string) => value.toLowerCase();
@@ -300,6 +304,15 @@ const matchJobs = (candidateProfile: ReturnType<typeof buildCandidateProfile>, j
 
 app.get("/health", (_req, res) => {
   res.json({ success: true, data: { status: "ok" } });
+});
+
+app.get("/jobs", async (_req, res) => {
+  try {
+    const jobs = await loadJobs();
+    res.json({ success: true, data: { jobs } });
+  } catch (error) {
+    res.status(500).json({ success: false, error: { message: "Failed to list jobs" } });
+  }
 });
 
 app.post("/upload-cv", upload.single("file"), async (req, res) => {

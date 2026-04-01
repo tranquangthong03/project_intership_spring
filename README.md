@@ -69,15 +69,23 @@ Start the web app (port 3000) in another terminal:
 npm run dev -w apps/web
 ```
 
-Start the crawler service skeleton:
+Start the crawler service skeleton (this runs ingestion pipeline automatically inside):
 
 ```bash
 npm run dev -w services/crawler
 ```
 
+After ingestion, jobs will be persisted to `data/jobs.json`.
+
 Optional environment variable for the web app:
 
 - `NEXT_PUBLIC_API_BASE_URL` (default: http://localhost:4000)
+
+## Check stored jobs
+
+You can verify the successfully ingested jobs using the API endpoint:
+
+- http://localhost:4000/jobs
 
 ## Important files
 
