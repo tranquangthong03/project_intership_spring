@@ -69,6 +69,12 @@ Start the web app (port 3000) in another terminal:
 npm run dev -w apps/web
 ```
 
+Start the crawler service skeleton:
+
+```bash
+npm run dev -w services/crawler
+```
+
 Optional environment variable for the web app:
 
 - `NEXT_PUBLIC_API_BASE_URL` (default: http://localhost:4000)

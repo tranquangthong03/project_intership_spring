@@ -67,3 +67,20 @@ export type JobMatch = {
   reasoning: string;
   recommendation: "apply" | "consider" | "low-fit";
 };
+
+export type JobRecord = {
+  id: string;
+  source: string;
+  title: string;
+  company: string;
+  location: string | null;
+  workMode: "onsite" | "hybrid" | "remote" | "unknown";
+  seniority: "intern" | "fresher" | "junior" | "middle" | "senior" | "lead" | "unknown";
+  salaryMin: number | null;
+  salaryMax: number | null;
+  currency: "VND" | "USD" | null;
+  skills: string[];
+  roleKeywords: string[];
+  description: string;
+  url: string;
+};
