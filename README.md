@@ -92,7 +92,11 @@ Optional environment variable for the web app:
 
 ## Check stored jobs
 
-You can verify the successfully ingested jobs using the API endpoint:
+You can view, search, and filter the successfully ingested jobs using the web dashboard:
+
+- http://localhost:3000/jobs
+
+Alternatively, access the raw API endpoint:
 
 - http://localhost:4000/jobs
 
