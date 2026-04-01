@@ -77,3 +77,117 @@ button:disabled {
 .status-error {
   color: #b91c1c;
 }
+
+/* Results View */
+.results-view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.results-header {
+  font-size: 24px;
+  margin: 16px 0 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.card-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.score-badge {
+  background: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.reasoning {
+  margin: 12px 0 0;
+  color: #4b5563;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.summary {
+  margin-top: 16px;
+}
+
+.summary p {
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.pills-container {
+  margin-top: 16px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: #e5e7eb;
+  font-size: 14px;
+}
+
+.fit-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pill-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.pill-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.pill-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.matches-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.reset-container {
+  margin-top: 32px;
+  text-align: center;
+}
