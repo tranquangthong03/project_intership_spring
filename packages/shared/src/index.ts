@@ -35,3 +35,33 @@ export type CandidateProfile = {
   projects: string[];
   rawText: string;
 };
+
+export type JobFixture = {
+  id: string;
+  source: string;
+  title: string;
+  company: string;
+  location: string | null;
+  workMode: "onsite" | "hybrid" | "remote" | "unknown";
+  seniority: "intern" | "fresher" | "junior" | "middle" | "senior" | "lead" | "unknown";
+  salaryMin: number | null;
+  salaryMax: number | null;
+  currency: "VND" | "USD" | null;
+  skills: string[];
+  roleKeywords: string[];
+  description: string;
+  url: string;
+};
+
+export type JobMatch = {
+  jobId: string;
+  title: string;
+  company: string;
+  matchScore: number;
+  matchedSkills: string[];
+  missingSkills: string[];
+  experienceFit: "low" | "medium" | "high";
+  roleFit: "low" | "medium" | "high";
+  reasoning: string;
+  recommendation: "apply" | "consider" | "low-fit";
+};

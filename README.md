@@ -59,6 +59,10 @@ The CV upload endpoint is available at:
 
 The upload response includes a parsed `candidateProfile` and raw extracted text.
 
+The fixture-based matching endpoint is available at:
+
+- http://localhost:4000/match
+
 Start the web app (port 3000) in another terminal:
 
 ```bash
