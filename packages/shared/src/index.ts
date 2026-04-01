@@ -66,6 +66,7 @@ export type JobMatch = {
   roleFit: "low" | "medium" | "high";
   reasoning: string;
   recommendation: "apply" | "consider" | "low-fit";
+  isAIAssisted?: boolean;
 };
 
 export type JobRecord = {
