@@ -1,8 +1,7 @@
 import { useState, useMemo } from "react";
 import type { CandidateProfile, JobMatch } from "packages/shared/src/index";
 import { CandidateProfileCard } from "./CandidateProfileCard";
-import { JobMatchCard } from "./JobMatchCard";
-
+import { JobMatchCard } from "./JobMatchCard";import { ChatAssistant } from "./ChatAssistant";
 type Props = {
   profile: CandidateProfile;
   matches: JobMatch[];
@@ -84,6 +83,8 @@ export function ResultsView({ profile, matches }: Props) {
           </div>
         )}
       </div>
+
+      <ChatAssistant profile={profile} matches={matches} />
     </div>
   );
 }

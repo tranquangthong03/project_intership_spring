@@ -100,6 +100,12 @@ Alternatively, access the raw API endpoint:
 
 - http://localhost:4000/jobs
 
+## AI Chatbot Assistant
+
+Once your CV is analyzed, a floating Chat Assistant widget (`💬 Ask AI Assistant`) is available on the Results screen. 
+- With `OPENAI_API_KEY`: Answers semantic and contextually deep questions based on your CV and Matches.
+- Without `OPENAI_API_KEY`: Safely falls back to a rule-based deterministic bot helping you find missing skills and top ranked jobs.
+
 ## Important files
 
 - `SKILL.md`

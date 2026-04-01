@@ -5,6 +5,7 @@ import multer from "multer";
 import path from "path";
 import pdfParse from "pdf-parse";
 import { evaluateMatchWithAI } from "./services/aiMatcher";
+import { handleChat } from "./services/chatService";
 
 const app = express();
 const port = process.env.PORT ? Number(process.env.PORT) : 4000;
@@ -377,7 +378,24 @@ app.post("/match", async (req, res) => {
     }
   });
 });
+app.post("/chat", async (req, res) => {
+  const { messages, candidateProfile, matches } = req.body;
 
+  if (!messages || !Array.isArray(messages)) {
+    res.status(400).json({ success: false, error: { message: "Invalid chat payload: messages missing." } });
+    return;
+  }
+
+  try {
+    const reply = await handleChat(messages, candidateProfile, matches);
+    res.json({
+      success: true,
+      data: { reply }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: { message: "Internal server error in chat logic." } });
+  }
+});
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.status(400).json({ success: false, error: { message: err.message } });
 });

@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import type { CandidateProfile, JobRecord, JobMatch } from "packages/shared/src/index";
 
-const getOpenAIClient = () => {
+export const getOpenAIClient = () => {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return null;
   return new OpenAI({ apiKey });
