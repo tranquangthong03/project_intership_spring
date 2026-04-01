@@ -85,3 +85,18 @@ export type JobRecord = {
   description: string;
   url: string;
 };
+
+export type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type ChatRequestPayload = {
+  messages: ChatMessage[];
+  candidateProfile?: CandidateProfile;
+  matches?: JobMatch[];
+};
+
+export type ChatResponsePayload = {
+  reply: string;
+};
