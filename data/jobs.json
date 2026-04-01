@@ -1,0 +1,24 @@
+[
+  {
+    "id": "itviec-1775033021383",
+    "source": "itviec",
+    "url": "https://itviec.com/jobs/senior-golang-developer-backend-sample",
+    "title": "Senior Golang Developer (Backend)",
+    "company": "Tech Company X",
+    "location": "Ho Chi Minh City",
+    "description": "Your Skills and Experience\n        \n          5+ years of experience in software development.\n          Strong proficiency in Golang.\n          Experience with microservices architecture.\n          Familiarity with PostgreSQL, Redis.\n          Experience with Docker and Kubernetes is a plus.\n        \n        Why You'll Love Working Here\n        Competitive salary and benefits.",
+    "skills": [
+      "Go",
+      "Backend",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes"
+    ],
+    "workMode": "unknown",
+    "seniority": "unknown",
+    "salaryMin": null,
+    "salaryMax": null,
+    "currency": null,
+    "roleKeywords": []
+  }
+]
